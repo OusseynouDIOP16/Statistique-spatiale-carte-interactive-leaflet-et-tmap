@@ -1,0 +1,135 @@
+---
+title: "tmap_carte"
+author: "DIOP Ousseynou & KPAKOU M'Mounéné"
+date: '2023-12-05'
+output: html_document
+
+---
+
+```{r setup, include=FALSE,warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bibliothèques
+
+```{r,warning=FALSE}
+library(tidyverse)
+library(sf)
+library(tmap)
+library(variousdata)
+```
+
+## ESQUISSE (TRES PUISSANCE POUR LES CARTE)
+```{r}
+library(esquisse)
+esquisse::esquisser(bkf)
+```
+
+
+##Carte statique avec tmap
+```{r,warning=FALSE}
+bkf<- read_sf("C:/Users/dell/Desktop/BKF/gadm41_BFA_2.shp")
+tmap_mode("plot")
+bkf_1 <- tm_shape(bkf) + 
+    tm_polygons() + 
+   tm_text("NAME_2", size = 0.5, col = "black", alpha = 0.8)+
+  tm_layout("Burkina Faso", inner.margins=c(0,0,.1,0), title.size=.8)+
+  tm_compass(type = "arrow", position = c("left", "top")) 
+bkf_1
+
+
+```
+
+
+## Ajout des etiquettes avec tmap
+
+```{r,warning=FALSE}
+library(openxlsx)
+way<- "C:/Users/dell/Desktop/BKF/température.xlsx"
+temperature <- read.xlsx(way)
+temperature <- data.frame(temperature)
+bkf_2<- merge(bkf, temperature, by = "NAME_2", all.x = TRUE)
+```
+
+## Carte choroplèthe
+
+```{r,warning=FALSE}
+library(tmap)
+
+bkf_2_T <- tm_shape(bkf_2) + 
+  tm_polygons("Temperature", title = "Temperature") +
+  tm_borders("white", lwd = 0.5) +
+  tm_text("NAME_2", size = 0.5, col = "black", alpha = 0.8)+
+  tm_layout(title = "Température du Burkina Faso")+
+  tm_compass(type = "arrow", position = c("left", "top"))+
+   tm_scale_bar(position = c("center","bottom"))
+bkf_2_T 
+```
+## Avec les Bubbles
+```{r,warning=FALSE}
+bkf_2_B <- tm_shape(bkf_2) + 
+  tm_polygons() +
+  tm_bubbles(size="Temperature",col="Temperature",textNA = "Valeur manquante")+
+  tm_layout(title = "Bubble Température du Burkina Faso")+
+  tm_compass(type = "arrow", position = c("left", "top"))+
+  tm_compass(type = "arrow", position = c("left", "top"))+
+  tm_text("NAME_2", size = 0.5, col = "black", alpha = 0.8)+
+   tm_scale_bar(position = c("center","bottom"))
+bkf_2_B
+```
+## farcet 
+
+```{r,warning=FALSE}
+bkf_2_P <- tm_shape(bkf_2) + 
+  tm_polygons("Temperature", textNA = "Valeur manquante", style = "jenks") +
+  tm_facets("Periode")+
+  tm_compass(type = "arrow", position = c("left", "top"))+
+  tm_text("NAME_2", size = 0.5, col = "black", alpha = 0.8)+
+  tm_scale_bar(position = c("center","bottom"))
+
+bkf_1+bkf_2_P
+```
+## arrange deux carte
+```{r}
+bkf_2_T <- tm_shape(bkf_2) + 
+  tm_polygons("Temperature", title = "Temperature") +
+  tm_borders("white", lwd = 0.5) +
+  tm_text("NAME_2", size = 0.5, col = "black", alpha = 0.8)+
+  tm_layout(title = "Température du Burkina Faso")+
+  tm_compass(type = "arrow", position = c("left", "top"))+
+   tm_scale_bar(position = c("center","bottom"))
+
+bkf_2_comoe <- bkf_2 %>%
+  filter(bkf_2$NAME_2=="Comoé") %>%
+  tm_shape("")+
+  tm_polygons("Temperature", title = "Temperature") +
+  tm_borders("white", lwd = 0.5) +
+  tm_text("NAME_2", size = 0.5, col = "black", alpha = 0.8)+
+  tm_layout(title = "Température de Comoé")+
+  tm_compass(type = "arrow", position = c("left", "top"))+
+  tm_scale_bar(position = c("center","bottom"))
+bkf_2_comoe
+tmap_arrange(bkf_2_comoe,bkf_2_T,nrow=1)
+```
+## Carte interactive
+```{r}
+tmap_mode("view")
+bkf_2_T <- tm_shape(bkf_2) + 
+  tm_polygons("Temperature", title = "Temperature") +
+  tm_borders("white", lwd = 0.5) +
+  tm_text("NAME_2", size = 0.5, col = "black", alpha = 0.8)+
+  tm_layout(title = "Température du Burkina Faso")+
+  tm_compass(type = "arrow", position = c("left", "top"))+
+   tm_scale_bar(position = c("center","bottom"))
+bkf_2_T
+```
+
+
+``
+
+```
+
+
+
+
+

@@ -1,0 +1,234 @@
+---
+title: "Carte interactif avec leaflet et tmap"
+author: "DIOP Ousseynou"
+date: '2023-12-05'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## leaflet
+```{r}
+lfl<- leaflet() %>% #utilisation de leaflet
+  addTiles()
+lfl
+```
+
+
+
+
+```{r,warning=FALSE}
+library(leaflet)
+
+lfl <- leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-14.452362, lat=14.497401,label = "Centroid Sénégal", popup="Sénégal, ville de la teranga compte plus 18 000 000 d'habitants")
+ 
+lfl  # Print the map
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r,warning=FALSE}
+
+lfl <- leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-14.452362, lat=14.497401,label = "Centroid Sénégal", popup="Sénégal, ville de la teranga compte plus 18 000 000 d'habitants")%>%
+  #ajout d'un marker de type cercle
+  addCircleMarkers(radius =50, #taille du cercle
+                   stroke = FALSE, 
+                   fillOpacity = 0.4, #opacité du remplissage du cercle
+                   lng=-14.452362 , lat=14.497401, #position gps du cercle
+                   label = " Buffer_Sénégal", 
+                   labelOptions = 
+                     labelOptions(noHide = F, # F pour cacher automatiquement le titre du cercle, T                                                          pour le concerver à l'affichage
+                                  direction = "bottom", #position du titre par rapport au centre du                                                           cercle...ici ... en dessous
+                                  style = list(
+                                                 "color" = "black", # couleur du titre du cercle
+                                                 "font-family" = "arial", #police de character du                                                                                     titre
+                                                 "font-style" = "bold", 
+                                                 "box-shadow" = "3px 3px rgba(0,0,0,0.25)", # taille                                                                    de la boite de titre de l'ombre
+                                                 "font-size" = "12px" #taille de la police de                                                                                 character
+                                               ))) %>%
+                                                       
+lfl
+```
+
+## leafem pour les coordonnées
+
+```{r,warning=FALSE}
+library(leafem)
+
+lfl <- leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-14.452362, lat=14.497401,label = "Centroid Sénégal", popup="Sénégal, ville de la teranga compte plus 18 000 000 d'habitants")%>%
+  #ajout d'un marker de type cercle
+  addCircleMarkers(radius =50, #taille du cercle
+                   stroke = FALSE, 
+                   fillOpacity = 0.4, #opacité du remplissage du cercle
+                   lng=-14.452362 , lat=14.497401, #position gps du cercle
+                   label = " Buffer_Sénégal", 
+                   labelOptions = 
+                     labelOptions(noHide = F, # F pour cacher automatiquement le titre du cercle, T                                                          pour le concerver à l'affichage
+                                  direction = "bottom", #position du titre par rapport au centre du                                                           cercle...ici ... en dessous
+                                  style = list(
+                                                 "color" = "black", # couleur du titre du cercle
+                                                 "font-family" = "arial", #police de character du                                                                                     titre
+                                                 "font-style" = "bold", 
+                                                 "box-shadow" = "3px 3px rgba(0,0,0,0.25)", # taille                                                                    de la boite de titre de l'ombre
+                                                 "font-size" = "12px" #taille de la police de                                                                                 character
+                                               ))) %>%
+                                                      addMouseCoordinates() 
+lfl
+
+```
+## recentrer le zoom
+```{r,warning=FALSE}
+library(leafem)
+#install.packages("leaflet.extras")
+library(leaflet.extras)
+
+lfl <- leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-14.452362, lat=14.497401,label = "Centroid Sénégal", popup="Sénégal, ville de la teranga compte plus 18 000 000 d'habitants")%>%
+  #ajout d'un marker de type cercle
+  addCircleMarkers(radius =50, #taille du cercle
+                   stroke = FALSE, 
+                   fillOpacity = 0.4, #opacité du remplissage du cercle
+                   lng=-14.452362 , lat=14.497401, #position gps du cercle
+                   label = " Buffer_Sénégal", 
+                   labelOptions = 
+                     labelOptions(noHide = F, # F pour cacher automatiquement le titre du cercle, T                                                          pour le concerver à l'affichage
+                                  direction = "bottom", #position du titre par rapport au centre du                                                           cercle...ici ... en dessous
+                                  style = list(
+                                                 "color" = "black", # couleur du titre du cercle
+                                                 "font-family" = "arial", #police de character du                                                                                     titre
+                                                 "font-style" = "bold", 
+                                                 "box-shadow" = "3px 3px rgba(0,0,0,0.25)", # taille                                                                    de la boite de titre de l'ombre
+                                                 "font-size" = "12px" #taille de la police de                                                                                 character
+                                               ))) %>%
+                                                      addMouseCoordinates()%>%
+                                                      addResetMapButton()
+lfl
+
+```
+
+## plein écran
+```{r,warning=FALSE}
+library(leafem)
+#install.packages("leaflet.extras")
+library(leaflet.extras)
+
+lfl <- leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-14.452362, lat=14.497401,label = "Centroid Sénégal", popup="Sénégal, ville de la teranga compte plus 18 000 000 d'habitants")%>%
+  #ajout d'un marker de type cercle
+  addCircleMarkers(radius =50, #taille du cercle
+                   stroke = FALSE, 
+                   fillOpacity = 0.4, #opacité du remplissage du cercle
+                   lng=-14.452362 , lat=14.497401, #position gps du cercle
+                   label = " Buffer_Sénégal", 
+                   labelOptions = 
+                     labelOptions(noHide = F, # F pour cacher automatiquement le titre du cercle, T                                                          pour le concerver à l'affichage
+                                  direction = "bottom", #position du titre par rapport au centre du                                                           cercle...ici ... en dessous
+                                  style = list(
+                                                 "color" = "black", # couleur du titre du cercle
+                                                 "font-family" = "arial", #police de character du                                                                                     titre
+                                                 "font-style" = "bold", 
+                                                 "box-shadow" = "3px 3px rgba(0,0,0,0.25)", # taille                                                                    de la boite de titre de l'ombre
+                                                 "font-size" = "12px" #taille de la police de                                                                                 character
+                                               ))) %>%
+                                                      addMouseCoordinates()%>%
+                                                      addResetMapButton()%>%
+                                                      addFullscreenControl()%>%
+                                                      addSearchOSM()
+lfl
+```
+
+## Calcul de distance
+
+```{r}
+library(leafem)
+#install.packages("leaflet.extras")
+library(leaflet.extras)
+
+lfl <- leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-14.452362, lat=14.497401,label = "Centroid Sénégal", popup="Sénégal, ville de la teranga compte plus 18 000 000 d'habitants")%>%
+  #ajout d'un marker de type cercle
+  addCircleMarkers(radius =50, #taille du cercle
+                   stroke = FALSE, 
+                   fillOpacity = 0.4, #opacité du remplissage du cercle
+                   lng=-14.452362 , lat=14.497401, #position gps du cercle
+                   label = " Buffer_Sénégal", 
+                   labelOptions = 
+                     labelOptions(noHide = F, # F pour cacher automatiquement le titre du cercle, T                                                          pour le concerver à l'affichage
+                                  direction = "bottom", #position du titre par rapport au centre du                                                           cercle...ici ... en dessous
+                                  style = list(
+                                                 "color" = "black", # couleur du titre du cercle
+                                                 "font-family" = "arial", #police de character du                                                                                     titre
+                                                 "font-style" = "bold", 
+                                                 "box-shadow" = "3px 3px rgba(0,0,0,0.25)", # taille                                                                    de la boite de titre de l'ombre
+                                                 "font-size" = "12px" 
+                                               ))) %>%
+                                                      addMouseCoordinates()%>%
+                                                      addResetMapButton()%>%
+                                                      addFullscreenControl()%>%
+                                                      addSearchOSM()%>%
+                 addMeasure(position = "topleft",              #positionnement de l'outil en haut à                                                                     gauche de la carte
+                  primaryLengthUnit = "kilometers",  # choix de l'unité de mesure  
+                  secondaryAreaUnit = FALSE)%>%
+ addScaleBar(       #ajout de l'échelle
+    position = "bottomleft" #positionnement de l'échelle en bas à gauche
+  )
+
+lfl
+```
+
+## Mini carte
+
+```{r, warning=FALSE}
+library(leafem)
+#install.packages("leaflet.extras")
+library(leaflet.extras)
+
+lfl <- leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-14.452362, lat=14.497401,label = "Centroid Sénégal", popup="Sénégal, ville de la teranga compte plus 18 000 000 d'habitants")%>%
+  #ajout d'un marker de type cercle
+  addCircleMarkers(radius =50, #taille du cercle
+                   stroke = FALSE, 
+                   fillOpacity = 0.4, #opacité du remplissage du cercle
+                   lng=-14.452362 , lat=14.497401, #position gps du cercle
+                   label = " Buffer_Sénégal", 
+                   labelOptions = 
+                     labelOptions(noHide = F, # F pour cacher automatiquement le titre du cercle, T                                                          pour le concerver à l'affichage
+                                  direction = "bottom", #position du titre par rapport au centre du                                                           cercle...ici ... en dessous
+                                  style = list(
+                                                 "color" = "black", # couleur du titre du cercle
+                                                 "font-family" = "arial", #police de character du                                                                                     titre
+                                                 "font-style" = "bold", 
+                                                 "box-shadow" = "3px 3px rgba(0,0,0,0.25)", # taille                                                                    de la boite de titre de l'ombre
+                                                 "font-size" = "12px" 
+                                               ))) %>%
+                                                      addMouseCoordinates()%>%
+                                                      addResetMapButton()%>%
+                                                      addFullscreenControl()%>%
+                                                      addSearchOSM()%>%
+                 addMeasure(position = "topleft",              #positionnement de l'outil en haut à                                                                     gauche de la carte
+                  primaryLengthUnit = "kilometers",  # choix de l'unité de mesure  
+                  secondaryAreaUnit = FALSE) %>%
+ addScaleBar(       #ajout de l'échelle
+    position = "bottomleft" #positionnement de l'échelle en bas à gauche
+  )%>%
+
+
+  addMiniMap(
+       toggleDisplay = FALSE)
+lfl
+```
+
